@@ -16,15 +16,14 @@ export default function App() {
   const [repositories, setRepositories] = useState([]);
 
   useEffect(() => {
-    api.get('/repositories').then(response => {
-      const repositories = response.data;
-      setRepositories(repositories);
-    }, []);
+    api.get('repositories').then(response => {
+      setRepositories(response.data);
+    })
 
-  })
+  }, []);
 
   async function handleLikeRepository(id) {
-    const response = await api.post(`/repositories/${id}/like`);
+    const response = await api.post(`repositories/${id}/like`);
 
     const repositoryLiked = response.data;
 
@@ -63,7 +62,7 @@ export default function App() {
                   style={styles.likeText}
                   testID={`repository-likes-${repository.id}`}
                 >
-                  {repository.likes} curtidas
+                  {repository.likes} {repository.likes > 1 ? 'curtidas' : 'curtida'}
                 </Text>
               </View>
 
